@@ -3,8 +3,8 @@ import pygame
 # --- 1. CONFIGURACIÓ I COLORS ---
 pygame.init()
 MIDA_RAJOLA = 60
-AMPLADA_MAPA, ALCADA_MAPA = 12, 10
-pantalla = pygame.display.set_mode((AMPLADA_MAPA * MIDA_RAJOLA, ALCADA_MAPA * MIDA_RAJOLA + 60))
+AMPLADA_MAPA, ALCADA_MAPA = 12, 6
+pantalla = pygame.display.set_mode((AMPLADA_MAPA * MIDA_RAJOLA, ALCADA_MAPA * MIDA_RAJOLA))
 pygame.display.set_caption("Projecte: El Laberint")
 rellotge = pygame.time.Clock()
 
