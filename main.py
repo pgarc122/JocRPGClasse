@@ -32,9 +32,9 @@ FINAL = 9
 mapa_nivell = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1],
     [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 9, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -104,10 +104,10 @@ while executant:
 
         # TODO: Captura les tecles de fletxes i crida a la funció intentar_moure(dx, dy)
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:    pass
-            if event.key == pygame.K_DOWN:  pass
-            if event.key == pygame.K_LEFT:  pass
-            if event.key == pygame.K_RIGHT: pass
+            if event.key == pygame.K_UP:    intentar_moure(0, -1)
+            if event.key == pygame.K_DOWN:  intentar_moure(0, 1)
+            if event.key == pygame.K_LEFT:  intentar_moure(-1, 0)
+            if event.key == pygame.K_RIGHT: intentar_moure(1,0)
 
     # Pintar la pantalla
     pantalla.fill((0, 0, 0))
