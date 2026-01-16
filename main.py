@@ -31,9 +31,9 @@ FINAL = 9
 # TODO: Dissenyeu el vostre mapa (0=terra, 1=mur, 2=aigua, 3=clau, 4=porta, 9=final)
 mapa_nivell = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 3, 1],
+    [1, 0, 3, 0, 1, 0, 0, 2, 0, 0, 0, 1],
+    [1, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 9, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
@@ -53,12 +53,35 @@ def intentar_moure(dx, dy):
     """
     Aquesta funció ha de calcular la nova posició i decidir si el jugador hi pot anar.
     """
-    # TODO: Calcula la nova posició (nova_x, nova_y) sumant dx i dy a la posició actual
+    # Calcula la nova posició (nova_x, nova_y) sumant dx i dy a la posició actual
+    nova_x = jugador['x'] + dx
+    nova_y = jugador['y'] + dy
+    pot_moure= False
 
-    # TODO: Comprova què hi ha al 'mapa_nivell' en aquesta nova posició (desti)
+    # Comprova què hi ha al 'mapa_nivell' en aquesta nova posició (desti)
+    desti = mapa_nivell[nova_y][nova_x]
 
-    # TODO: Lògica de col·lisions:
+    # Lògica de col·lisions:
     # 1. Si el destí és terra (0) o el final (9), el jugador es mou.
+    if desti == TERRA or desti == FINAL:
+        pot_moure = True
+
+    if desti == CLAU:
+        pot_moure = True
+        jugador['claus'] += 1
+        mapa_nivell[nova_y][nova_x] = TERRA
+
+    if desti == PORTA and jugador['claus'] > 0:
+        pot_moure = True
+        jugador['claus'] -= 1
+        mapa_nivell[nova_y][nova_x] = TERRA
+
+    if pot_moure:
+        jugador['x'] = nova_x
+        jugador['y'] = nova_y
+
+    print(jugador)
+
     # 2. Si el destí és una clau (3), puja l'inventari i el terra es torna 0.
     # 3. Si el destí és una porta (4), comprova si tens claus.
     # 4. Si el destí és un mur (1) o aigua (2), no facis res.
@@ -107,7 +130,7 @@ while executant:
             if event.key == pygame.K_UP:    intentar_moure(0, -1)
             if event.key == pygame.K_DOWN:  intentar_moure(0, 1)
             if event.key == pygame.K_LEFT:  intentar_moure(-1, 0)
-            if event.key == pygame.K_RIGHT: intentar_moure(1,0)
+            if event.key == pygame.K_RIGHT: intentar_moure(1, 0)
 
     # Pintar la pantalla
     pantalla.fill((0, 0, 0))
