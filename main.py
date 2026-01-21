@@ -91,6 +91,14 @@ def intentar_moure(dx, dy):
 
 # --- 4. FUNCIONS DE DIBUIX  ---
 
+def dibuixa_mur(x, y):
+    pygame.draw.rect(pantalla, COLORS['mur'], (x, y, MIDA_RAJOLA, MIDA_RAJOLA))
+
+
+def dibuixa_aigua(x, y):
+    pygame.draw.rect(pantalla, COLORS['aigua'], (x, y, MIDA_RAJOLA, MIDA_RAJOLA))
+
+
 def dibuixa_escenari():
     for fila in range(len(mapa_nivell)):
         for col in range(len(mapa_nivell[fila])):
@@ -100,9 +108,9 @@ def dibuixa_escenari():
             # Dibuix bàsic segons el tipus (simplificat per a la plantilla)
             pygame.draw.rect(pantalla, COLORS['terra'], (x, y, MIDA_RAJOLA, MIDA_RAJOLA))
             if tipus == MUR:
-                pygame.draw.rect(pantalla, COLORS['mur'], (x, y, MIDA_RAJOLA, MIDA_RAJOLA))
+                dibuixa_mur(x, y)
             elif tipus == AIGUA:
-                pygame.draw.rect(pantalla, COLORS['aigua'], (x, y, MIDA_RAJOLA, MIDA_RAJOLA))
+                dibuixa_aigua(x, y)
             elif tipus == CLAU:
                 pygame.draw.circle(pantalla, COLORS['clau'], (x + 30, y + 30), 10)
             elif tipus == PORTA:
