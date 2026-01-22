@@ -76,7 +76,7 @@ def obtenir_pixel_centre(grid_x, grid_y):
     py = grid_y * MIDA_CELLA + MIDA_CELLA // 2 + 50
     return (px, py)
 
-def dibuixa_fantasma(fantasma):
+def dibuixa_fantasma(f):
     """Aquí els alumnes han de programar el dibuix de l'enemic."""
     # TODO: EXERCICI 1
     cx, cy = obtenir_pixel_centre(f['x'], f['y'])
