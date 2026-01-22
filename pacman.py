@@ -63,14 +63,30 @@ fantasmes = [
 def es_moviment_valid(x, y):
     """Comprova si la casella (x, y) de la graella és caminable (no és un mur)"""
     if 0 <= x < AMPLADA_GRID and 0 <= y < ALCADA_GRID:
+       # if mapa[y][x] != MUR:
+       #     return True
+        #else:
+        #    return False
+
         return mapa[y][x] != MUR
     return False
 
+def obtenir_pixel_centre(grid_x, grid_y):
+    px = grid_x * MIDA_CELLA + MIDA_CELLA // 2
+    py = grid_y * MIDA_CELLA + MIDA_CELLA // 2 + 50
+    return (px, py)
 
-def dibuixa_fantasma(f):
+def dibuixa_fantasma(fantasma):
     """Aquí els alumnes han de programar el dibuix de l'enemic."""
     # TODO: EXERCICI 1
-    pass
+    cx, cy = obtenir_pixel_centre(f['x'], f['y'])
+    pygame.draw.circle(pantalla, f['color'], (cx, cy), MIDA_CELLA // 2 - 4)
+    rect_cos = (cx - (MIDA_CELLA // 2 - 4), cy, MIDA_CELLA - 8, MIDA_CELLA // 2 - 4)
+    pygame.draw.rect(pantalla, f['color'], rect_cos)
+    pygame.draw.circle(pantalla, BLANC, (cx - 6, cy - 4), 5)
+    pygame.draw.circle(pantalla, BLANC, (cx + 6, cy - 4), 5)
+    pygame.draw.circle(pantalla, NEGRE, (cx - 6 , cy - 4 ), 2)
+    pygame.draw.circle(pantalla, NEGRE, (cx + 6 , cy - 4 ), 2)
 
 
 # =============================================================================
