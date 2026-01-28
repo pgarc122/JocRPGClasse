@@ -95,6 +95,12 @@ def dibuixa_fantasma(f):
 frame_actual = 0
 executant = True
 
+
+def mou_fantasma(fantasma):
+    x, y = fantasma['x'], fantasma['y']
+
+
+
 while executant:
     # --- A. CAPTURAR INPUTS ---
     for event in pygame.event.get():
@@ -132,8 +138,7 @@ while executant:
     if frame_actual % 12 == 0:  # El fantasma es mou cada 12 frames (més lent!)
         for f in fantasmes:
             # TODO: EXERCICI 3 (Moviment automàtic del fantasma)
-            f['x'] += f['dx']  # Per ara només avança, heu de fer que giri!
-            pass
+           mou_fantasma(f)
 
     # --- D. DIBUIXAR ---
     pantalla.fill(NEGRE)
