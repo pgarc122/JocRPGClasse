@@ -30,3 +30,7 @@ for i in range(len(despeses)):
     for j in range(len(despeses[i])):
         suma += despeses[i][j]
     print("La persona ", i, " ha gastat ", suma)
+
+suma = 0
+for i in range(len(despeses)):
+    suma += despeses[i][0]
