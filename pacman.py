@@ -96,9 +96,29 @@ frame_actual = 0
 executant = True
 
 
-def mou_fantasma(fantasma):
-    x, y = fantasma['x'], fantasma['y']
+def mou_fantasma(f):
+    direcciones = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
+    # 1. Intentar seguir en la dirección actual
+    nx = f["x"] + f["dx"]
+    ny = f["y"] + f["dy"]
+
+    if es_moviment_valid(nx, ny):
+        f["x"] = nx
+        f["y"] = ny
+        return
+
+    # 2. Si no puede seguir, buscamos nuevas direcciones válidas
+    direccions_valides = []
+    for dx, dy in direcciones:
+        if es_moviment_valid(f["x"] + dx, f["y"] + dy):
+            direccions_valides.append((dx, dy))
+
+    # 3. Elegimos una dirección aleatoria
+    if direccions_valides:
+        f["dx"], f["dy"] = random.choice(direccions_valides)
+        f["x"] += f["dx"]
+        f["y"] += f["dy"]
 
 
 while executant:
