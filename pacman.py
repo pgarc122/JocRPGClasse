@@ -34,7 +34,7 @@ mapa = [
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 2, 1, 1, 2, 1, 0, 0, 0, 1, 2, 1, 1, 2, 1],
+    [1, 2, 1, 1, 2, 1, 1, 1, 0, 1, 2, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
@@ -63,18 +63,20 @@ fantasmes = [
 def es_moviment_valid(x, y):
     """Comprova si la casella (x, y) de la graella és caminable (no és un mur)"""
     if 0 <= x < AMPLADA_GRID and 0 <= y < ALCADA_GRID:
-       # if mapa[y][x] != MUR:
-       #     return True
-        #else:
+        # if mapa[y][x] != MUR:
+        #     return True
+        # else:
         #    return False
 
         return mapa[y][x] != MUR
     return False
 
+
 def obtenir_pixel_centre(grid_x, grid_y):
     px = grid_x * MIDA_CELLA + MIDA_CELLA // 2
     py = grid_y * MIDA_CELLA + MIDA_CELLA // 2 + 50
     return (px, py)
+
 
 def dibuixa_fantasma(f):
     """Aquí els alumnes han de programar el dibuix de l'enemic."""
@@ -85,8 +87,8 @@ def dibuixa_fantasma(f):
     pygame.draw.rect(pantalla, f['color'], rect_cos)
     pygame.draw.circle(pantalla, BLANC, (cx - 6, cy - 4), 5)
     pygame.draw.circle(pantalla, BLANC, (cx + 6, cy - 4), 5)
-    pygame.draw.circle(pantalla, NEGRE, (cx - 6 , cy - 4 ), 2)
-    pygame.draw.circle(pantalla, NEGRE, (cx + 6 , cy - 4 ), 2)
+    pygame.draw.circle(pantalla, NEGRE, (cx - 6, cy - 4), 2)
+    pygame.draw.circle(pantalla, NEGRE, (cx + 6, cy - 4), 2)
 
 
 # =============================================================================
@@ -103,12 +105,15 @@ def mou_fantasma(f):
     nx = f["x"] + f["dx"]
     ny = f["y"] + f["dy"]
 
-    if es_moviment_valid(nx, ny):
+    if f['dx'] != 0 and mapa[f['y'] + 1][f['x']] == MUR and mapa[f['y'] - 1][f['x']] == MUR:
         f["x"] = nx
+        return
+
+    if f['dy'] != 0 and mapa[f['y']][f['x'] + 1] == MUR and mapa[f['y']][f['x'] - 1] == MUR:
         f["y"] = ny
         return
 
-    # 2. Si no puede seguir, buscamos nuevas direcciones válidas
+        # 2. Si no puede seguir, buscamos nuevas direcciones válidas
     direccions_valides = []
     for dx, dy in direcciones:
         if es_moviment_valid(f["x"] + dx, f["y"] + dy):
@@ -158,7 +163,7 @@ while executant:
     if frame_actual % 12 == 0:  # El fantasma es mou cada 12 frames (més lent!)
         for f in fantasmes:
             # TODO: EXERCICI 3 (Moviment automàtic del fantasma)
-           mou_fantasma(f)
+            mou_fantasma(f)
 
     # --- D. DIBUIXAR ---
     pantalla.fill(NEGRE)
