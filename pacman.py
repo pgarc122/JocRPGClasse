@@ -34,7 +34,7 @@ mapa = [
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-    [1, 2, 1, 1, 2, 1, 1, 1, 0, 1, 2, 1, 1, 2, 1],
+    [1, 2, 1, 1, 2, 1, 0, 1, 0, 1, 2, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
@@ -99,23 +99,23 @@ executant = True
 
 
 def mou_fantasma(f):
-    direcciones = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    x, y = f["x"], f["y"]
+    dx, dy = f["dx"], f["dy"]
 
-    # 1. Intentar seguir en la dirección actual
-    nx = f["x"] + f["dx"]
-    ny = f["y"] + f["dy"]
-
-    if f['dx'] != 0 and mapa[f['y'] + 1][f['x']] == MUR and mapa[f['y'] - 1][f['x']] == MUR:
-        f["x"] = nx
+    # 1. Intentar seguir en la direcció actual
+    if dx != 0 and mapa[y + 1][x] == MUR and mapa[y - 1][x] == MUR:
+        f["x"] = x + dx
         return
 
-    if f['dy'] != 0 and mapa[f['y']][f['x'] + 1] == MUR and mapa[f['y']][f['x'] - 1] == MUR:
-        f["y"] = ny
+    if dy != 0 and mapa[y][x + 1] == MUR and mapa[y][x - 1] == MUR:
+        f["y"] = y + dy
         return
 
         # 2. Si no puede seguir, buscamos nuevas direcciones válidas
+    direccions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     direccions_valides = []
-    for dx, dy in direcciones:
+
+    for dx, dy in direccions:
         if es_moviment_valid(f["x"] + dx, f["y"] + dy):
             direccions_valides.append((dx, dy))
 
