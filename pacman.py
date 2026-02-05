@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import random
 
@@ -18,6 +20,7 @@ GROC = (255, 230, 0)
 BLANC = (255, 255, 255)
 VERMELL = (255, 50, 50)
 TARONJA = (255, 160, 50)
+ROSA = (255, 105, 180)
 
 # Constants per no haver de recordar que el número 1 és un mur
 BUIT, MUR, PUNT = 0, 1, 2
@@ -98,6 +101,42 @@ frame_actual = 0
 executant = True
 
 
+def moviment_inteligent(direccions_valides, fantasma):
+    color = fantasma['color']
+
+    # Fantasma dummy
+    if color == TARONJA:
+        return random.choice(direccions_valides)
+
+    # Fantasma intel·ligent
+    elif color == VERMELL:
+        minimia = 10000
+        direccio_minima = None
+
+        for d in direccions_valides:
+            jx, jy = jugador["x"], jugador["y"]
+            fx, fy = fantasma["x"], fantasma["y"]
+            fx += d[0]
+            fy += d[1]
+
+            a = fx - jx
+            b = fy - jy
+            h = math.sqrt(a * a + b * b)
+
+            if h < minimia:
+                minimia = h
+                direccio_minima = d
+
+        return direccio_minima
+
+    # Fantasma que fuig
+    elif color == ROSA:
+        return
+
+    else:
+        return random.choice(direccions_valides)
+
+
 def mou_fantasma(f):
     x, y = f["x"], f["y"]
     dx, dy = f["dx"], f["dy"]
@@ -121,7 +160,7 @@ def mou_fantasma(f):
 
     # 3. Elegimos una dirección aleatoria
     if direccions_valides:
-        f["dx"], f["dy"] = random.choice(direccions_valides)
+        f["dx"], f["dy"] = moviment_inteligent(direccions_valides, f)
         f["x"] += f["dx"]
         f["y"] += f["dy"]
 
