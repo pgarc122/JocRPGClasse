@@ -55,7 +55,9 @@ jugador = {
 }
 
 fantasmes = [
-    {"x": 7, "y": 5, "dx": 1, "dy": 0, "color": VERMELL}
+    {"x": 7, "y": 5, "dx": 1, "dy": 0, "color": VERMELL},
+    {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": ROSA},
+    {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": TARONJA},
 ]
 
 
@@ -131,7 +133,7 @@ def moviment_inteligent(direccions_valides, fantasma):
 
     # Fantasma que fuig
     elif color == ROSA:
-        return
+        return random.choice(direccions_valides)
 
     else:
         return random.choice(direccions_valides)
