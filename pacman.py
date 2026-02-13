@@ -133,7 +133,25 @@ def moviment_inteligent(direccions_valides, fantasma):
 
     # Fantasma que fuig
     elif color == ROSA:
-        return random.choice(direccions_valides)
+        maxima = 0
+        direccio_maxima = None
+
+        for d in direccions_valides:
+            jx, jy = jugador["x"], jugador["y"]
+            fx, fy = fantasma["x"], fantasma["y"]
+            fx += d[0]
+            fy += d[1]
+
+            a = fx - jx
+            b = fy - jy
+            h = math.sqrt(a * a + b * b)
+
+            if h > maxima:
+                maxima = h
+                direccio_maxima = d
+
+        return direccio_maxima
+
 
     else:
         return random.choice(direccions_valides)
@@ -201,7 +219,7 @@ while executant:
             pass
 
     # --- C. LÒGICA DELS FANTASMES ---
-    if frame_actual % 12 == 0:  # El fantasma es mou cada 12 frames (més lent!)
+    if frame_actual % 24 == 0:  # El fantasma es mou cada 12 frames (més lent!)
         for f in fantasmes:
             # TODO: EXERCICI 3 (Moviment automàtic del fantasma)
             mou_fantasma(f)
