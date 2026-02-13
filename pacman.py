@@ -216,7 +216,9 @@ while executant:
 
             # TODO: EXERCICI 2 (Menjar punts)
             # Escriviu aquí la lògica per detectar si hi ha un PUNT a la posició actual.
-            pass
+            if mapa[jugador['y']][jugador['x']] == PUNT:
+                mapa[jugador['y']][jugador['x']] = BUIT
+                jugador['punts'] += 1
 
     # --- C. LÒGICA DELS FANTASMES ---
     if frame_actual % 24 == 0:  # El fantasma es mou cada 12 frames (més lent!)
@@ -235,7 +237,8 @@ while executant:
             px, py = col * MIDA_CELLA, fila * MIDA_CELLA + 50
             if mapa[fila][col] == MUR:
                 pygame.draw.rect(pantalla, BLAU, (px + 2, py + 2, MIDA_CELLA - 4, MIDA_CELLA - 4), border_radius=5)
-            # TODO: EXERCICI 4 (Dibuixar punts)
+            if mapa[fila][col] == PUNT:
+                pygame.draw.circle(pantalla, GROC, (col * MIDA_CELLA + 20, fila * MIDA_CELLA + 70), 3)
 
     # Dibuixem el jugador (Convertint la seva X/Y de graella a Píxels)
     # El +20 és per posar el centre del cercle al mig de la casella de 40.
