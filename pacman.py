@@ -246,6 +246,10 @@ while executant:
 
     for f in fantasmes: dibuixa_fantasma(f)
 
+    font_marcador = pygame.font.SysFont("Arial", 24, bold=True)
+    text = font_marcador.render(f"PUNTS: {jugador['punts']} / 72", True, BLANC)
+    pantalla.blit(text, (20, 10))
+
     # Actualitzem la finestra
     pygame.display.flip()
     frame_actual += 1
