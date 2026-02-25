@@ -36,7 +36,7 @@ mapa = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
     [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1],
-    [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+    [1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 2, 1],
     [1, 2, 1, 1, 2, 1, 0, 1, 0, 1, 2, 1, 1, 2, 1],
     [1, 2, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
@@ -59,6 +59,12 @@ fantasmes = [
     {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": ROSA},
     {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": TARONJA},
 ]
+
+punts_totals = 0
+for i in range(len(mapa)):
+    for j in range(len(mapa[i])):
+        if mapa[i][j] == PUNT:
+            punts_totals += 1
 
 
 # =============================================================================
@@ -247,7 +253,7 @@ while executant:
     for f in fantasmes: dibuixa_fantasma(f)
 
     font_marcador = pygame.font.SysFont("Arial", 24, bold=True)
-    text = font_marcador.render(f"PUNTS: {jugador['punts']} / 72", True, BLANC)
+    text = font_marcador.render(f"PUNTS: {jugador['punts']} / {punts_totals}", True, BLANC)
     pantalla.blit(text, (20, 10))
 
     # Actualitzem la finestra
