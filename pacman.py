@@ -154,42 +154,6 @@ def main():
     # =============================================================================
     # 2. DADES DEL JOC (L'estat inicial)
     # =============================================================================
-    mapa = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
-        [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1],
-        [1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 2, 1],
-        [1, 2, 1, 1, 2, 1, 0, 1, 0, 1, 2, 1, 1, 2, 1],
-        [1, 2, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 2, 1],
-        [1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
-        [1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1],
-        [1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1],
-        [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ]
-
-    # El diccionari del jugador guarda tota la seva informació
-    jugador = {
-        "x": 1, "y": 1,  # Posició actual a la graella
-        "dx": 0, "dy": 0,  # Direcció en què s'està movent ARA
-        "next_dx": 0, "next_dy": 0,  # La direcció que hem premut però encara no s'ha aplicat
-        "punts": 0
-    }
-
-    fantasmes = [
-        {"x": 7, "y": 5, "dx": 1, "dy": 0, "color": VERMELL},
-        {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": ROSA},
-        {"x": 8, "y": 5, "dx": 1, "dy": 0, "color": TARONJA},
-    ]
-
-    guanyar = False
-    perdre = False
-
-    punts_totals = 0
-    for i in range(len(mapa)):
-        for j in range(len(mapa[i])):
-            if mapa[i][j] == PUNT:
-                punts_totals += 1
 
     executant = True
     frame_actual = 0
@@ -336,9 +300,6 @@ def main():
             pantalla.blit(text, (AMPLADA_GRID * MIDA_CELLA / 2 - text.get_width()/2, ALCADA_GRID * MIDA_CELLA / 2))
 
         pygame.display.flip()
-
-
-    pygame.quit()
 
 
 if __name__ == "__main__":
