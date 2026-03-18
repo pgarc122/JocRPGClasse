@@ -1,4 +1,5 @@
 import math
+import sys
 
 import pygame
 import random
@@ -231,6 +232,9 @@ def main():
                 if mapa[i][j] == PUNT:
                     punts_totals += 1
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: sys.exit()
+
         # =============================================================================
         # 4. BUCLE PRINCIPAL (El cor del joc)
         # =============================================================================
@@ -238,7 +242,7 @@ def main():
         while executant:
                 # --- A. CAPTURAR INPUTS ---
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT: executant = False
+                    if event.type == pygame.QUIT: sys.exit()
 
                     if event.type == pygame.KEYDOWN:
                         # Quan premem una tecla, NO movem el personatge directament.
