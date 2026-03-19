@@ -21,6 +21,7 @@ ROSA = (255, 105, 180)
 # Constants per no haver de recordar que el número 1 és un mur
 BUIT, MUR, PUNT = 0, 1, 2
 
+
 # =============================================================================
 # 3. FUNCIONS (Lògica de suport)
 # =============================================================================
@@ -54,9 +55,6 @@ def dibuixa_fantasma(pantalla, f):
     pygame.draw.circle(pantalla, BLANC, (cx + 6, cy - 4), 5)
     pygame.draw.circle(pantalla, NEGRE, (cx - 6, cy - 4), 2)
     pygame.draw.circle(pantalla, NEGRE, (cx + 6, cy - 4), 2)
-
-
-
 
 
 def moviment_inteligent(jugador, direccions_valides, fantasma):
@@ -198,106 +196,104 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE: executant = True
 
         # =============================================================================
         # 4. BUCLE PRINCIPAL (El cor del joc)
         # =============================================================================
 
         while executant:
-                # --- A. CAPTURAR INPUTS ---
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT: sys.exit()
+            # --- A. CAPTURAR INPUTS ---
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: sys.exit()
 
-                    if event.type == pygame.KEYDOWN:
-                        # Quan premem una tecla, NO movem el personatge directament.
-                        # Només guardem el "desig" de girar a next_dx i next_dy.
-                        if event.key == pygame.K_UP:    jugador['next_dx'], jugador['next_dy'] = 0, -1
-                        if event.key == pygame.K_DOWN:  jugador['next_dx'], jugador['next_dy'] = 0, 1
-                        if event.key == pygame.K_LEFT:  jugador['next_dx'], jugador['next_dy'] = -1, 0
-                        if event.key == pygame.K_RIGHT: jugador['next_dx'], jugador['next_dy'] = 1, 0
+                if event.type == pygame.KEYDOWN:
+                    # Quan premem una tecla, NO movem el personatge directament.
+                    # Només guardem el "desig" de girar a next_dx i next_dy.
+                    if event.key == pygame.K_UP:    jugador['next_dx'], jugador['next_dy'] = 0, -1
+                    if event.key == pygame.K_DOWN:  jugador['next_dx'], jugador['next_dy'] = 0, 1
+                    if event.key == pygame.K_LEFT:  jugador['next_dx'], jugador['next_dy'] = -1, 0
+                    if event.key == pygame.K_RIGHT: jugador['next_dx'], jugador['next_dy'] = 1, 0
 
-                # --- B. LÒGICA DE MOVIMENT (Només s'executa 1 de cada 8 vegades per no anar massa ràpid) ---
-                if frame_actual % 8 == 0:
+            # --- B. LÒGICA DE MOVIMENT (Només s'executa 1 de cada 8 vegades per no anar massa ràpid) ---
+            if frame_actual % 8 == 0:
 
-                    # 1. Intentem aplicar el "desig" de girar
-                    # Mirem si la direcció que l'usuari vol (next) està lliure
-                    if es_moviment_valid(mapa, jugador['x'] + jugador['next_dx'], jugador['y'] + jugador['next_dy']):
-                        # Si està lliure, la direcció actual (dx) passa a ser la desitjada (next)
-                        jugador['dx'] = jugador['next_dx']
-                        jugador['dy'] = jugador['next_dy']
+                # 1. Intentem aplicar el "desig" de girar
+                # Mirem si la direcció que l'usuari vol (next) està lliure
+                if es_moviment_valid(mapa, jugador['x'] + jugador['next_dx'], jugador['y'] + jugador['next_dy']):
+                    # Si està lliure, la direcció actual (dx) passa a ser la desitjada (next)
+                    jugador['dx'] = jugador['next_dx']
+                    jugador['dy'] = jugador['next_dy']
 
-                    # 2. Intentem moure el personatge
-                    # Mirem si pot seguir avançant en la seva direcció actual
-                    if es_moviment_valid(mapa, jugador['x'] + jugador['dx'], jugador['y'] + jugador['dy']):
-                        jugador['x'] += jugador['dx']
-                        jugador['y'] += jugador['dy']
+                # 2. Intentem moure el personatge
+                # Mirem si pot seguir avançant en la seva direcció actual
+                if es_moviment_valid(mapa, jugador['x'] + jugador['dx'], jugador['y'] + jugador['dy']):
+                    jugador['x'] += jugador['dx']
+                    jugador['y'] += jugador['dy']
 
-                        # TODO: EXERCICI 2 (Menjar punts)
-                        # Escriviu aquí la lògica per detectar si hi ha un PUNT a la posició actual.
-                        if mapa[jugador['y']][jugador['x']] == PUNT:
-                            mapa[jugador['y']][jugador['x']] = BUIT
-                            jugador['punts'] += 1
+                    # TODO: EXERCICI 2 (Menjar punts)
+                    # Escriviu aquí la lògica per detectar si hi ha un PUNT a la posició actual.
+                    if mapa[jugador['y']][jugador['x']] == PUNT:
+                        mapa[jugador['y']][jugador['x']] = BUIT
+                        jugador['punts'] += 1
 
-                # --- C. LÒGICA DELS FANTASMES ---
-                if frame_actual % 24 == 0:  # El fantasma es mou cada 12 frames (més lent!)
-                    for f in fantasmes:
-                        # TODO: EXERCICI 3 (Moviment automàtic del fantasma)
-                        mou_fantasma(jugador, mapa, f)
-
-                ### GUANYAR I PERDRE
-                if jugador['punts'] >= punts_totals:
-                    guanyar = True
-
+            # --- C. LÒGICA DELS FANTASMES ---
+            if frame_actual % 24 == 0:  # El fantasma es mou cada 12 frames (més lent!)
                 for f in fantasmes:
-                    if jugador['x'] == f['x'] and jugador['y'] == f['y']:
-                        perdre = True
+                    # TODO: EXERCICI 3 (Moviment automàtic del fantasma)
+                    mou_fantasma(jugador, mapa, f)
 
-                if guanyar or perdre:
-                    executant = False
+            ### GUANYAR I PERDRE
+            if jugador['punts'] >= punts_totals:
+                guanyar = True
 
-                # --- D. DIBUIXAR ---
-                pantalla.fill(NEGRE)
+            for f in fantasmes:
+                if jugador['x'] == f['x'] and jugador['y'] == f['y']:
+                    perdre = True
 
-                # Dibuixem el mapa
-                for fila in range(ALCADA_GRID):
-                    for col in range(AMPLADA_GRID):
-                        # Calculem on cau cada casella en píxels (x, y)
-                        # Afegim +50 de marge superior per no tapar el marcador
-                        px, py = col * MIDA_CELLA, fila * MIDA_CELLA + 50
-                        if mapa[fila][col] == MUR:
-                            pygame.draw.rect(pantalla, BLAU, (px + 2, py + 2, MIDA_CELLA - 4, MIDA_CELLA - 4), border_radius=5)
-                        if mapa[fila][col] == PUNT:
-                            pygame.draw.circle(pantalla, GROC, (col * MIDA_CELLA + 20, fila * MIDA_CELLA + 70), 3)
+            if guanyar or perdre:
+                executant = False
 
-                # Dibuixem el jugador (Convertint la seva X/Y de graella a Píxels)
-                # El +20 és per posar el centre del cercle al mig de la casella de 40.
-                pygame.draw.circle(pantalla, GROC, (jugador['x'] * MIDA_CELLA + 20, jugador['y'] * MIDA_CELLA + 70), 16)
+            # --- D. DIBUIXAR ---
+            pantalla.fill(NEGRE)
 
-                for f in fantasmes: dibuixa_fantasma(pantalla, f)
+            # Dibuixem el mapa
+            for fila in range(ALCADA_GRID):
+                for col in range(AMPLADA_GRID):
+                    # Calculem on cau cada casella en píxels (x, y)
+                    # Afegim +50 de marge superior per no tapar el marcador
+                    px, py = col * MIDA_CELLA, fila * MIDA_CELLA + 50
+                    if mapa[fila][col] == MUR:
+                        pygame.draw.rect(pantalla, BLAU, (px + 2, py + 2, MIDA_CELLA - 4, MIDA_CELLA - 4),
+                                         border_radius=5)
+                    if mapa[fila][col] == PUNT:
+                        pygame.draw.circle(pantalla, GROC, (col * MIDA_CELLA + 20, fila * MIDA_CELLA + 70), 3)
 
-                font_marcador = pygame.font.SysFont("Arial", 24, bold=True)
-                text = font_marcador.render(f"PUNTS: {jugador['punts']} / {punts_totals}", True, BLANC)
-                pantalla.blit(text, (20, 10))
+            # Dibuixem el jugador (Convertint la seva X/Y de graella a Píxels)
+            # El +20 és per posar el centre del cercle al mig de la casella de 40.
+            pygame.draw.circle(pantalla, GROC, (jugador['x'] * MIDA_CELLA + 20, jugador['y'] * MIDA_CELLA + 70), 16)
 
-                # Actualitzem la finestra
-                pygame.display.flip()
-                frame_actual += 1
-                rellotge.tick(60)
+            for f in fantasmes: dibuixa_fantasma(pantalla, f)
 
-        # Comprovar si s'ha de reinciar la partida
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE: executant = True
+            font_marcador = pygame.font.SysFont("Arial", 24, bold=True)
+            text = font_marcador.render(f"PUNTS: {jugador['punts']} / {punts_totals}", True, BLANC)
+            pantalla.blit(text, (20, 10))
+
+            # Actualitzem la finestra
+            pygame.display.flip()
+            frame_actual += 1
+            rellotge.tick(60)
 
         # Pintem lletres victoria o derrota
         font_marcador = pygame.font.SysFont("Arial", 70, bold=True)
         if guanyar:
             text = font_marcador.render(f"VICTORIA!", True, VERMELL)
-            pantalla.blit(text, (AMPLADA_GRID * MIDA_CELLA / 2 - text.get_width()/2, ALCADA_GRID * MIDA_CELLA / 2))
+            pantalla.blit(text, (AMPLADA_GRID * MIDA_CELLA / 2 - text.get_width() / 2, ALCADA_GRID * MIDA_CELLA / 2))
 
         if perdre:
             text = font_marcador.render(f"GAME OVER :(", True, VERMELL)
-            pantalla.blit(text, (AMPLADA_GRID * MIDA_CELLA / 2 - text.get_width()/2, ALCADA_GRID * MIDA_CELLA / 2))
+            pantalla.blit(text, (AMPLADA_GRID * MIDA_CELLA / 2 - text.get_width() / 2, ALCADA_GRID * MIDA_CELLA / 2))
 
         pygame.display.flip()
 
